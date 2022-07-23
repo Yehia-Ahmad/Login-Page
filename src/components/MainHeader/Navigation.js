@@ -3,17 +3,24 @@ import React from "react";
 import styles from "./Navigation.module.css";
 
 const Navigation = (props) => {
+  const closePage = () => {
+    props.onClosePageHandler();
+  };
   return (
     <nav className={styles.nav}>
       <ul>
         <li>
-          <a href="/">User</a>
+          <a href="/" onClick={closePage}>
+            User
+          </a>
         </li>
         <li>
-          <a href="/">Admin</a>
+          <a href="/" onClick={closePage}>
+            Admin
+          </a>
         </li>
         <li>
-          <button>Logout</button>
+          <button onClick={closePage}>Logout</button>
         </li>
       </ul>
     </nav>

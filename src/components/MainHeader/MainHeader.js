@@ -8,7 +8,7 @@ const MainHeader = (props) => {
   return (
     <header className={Styles["main-header"]}>
       <h1>A Typical Page</h1>
-      {isLogin && <Navigation />}
+      {isLogin && <Navigation onClosePageHandler={props.onClosePage} />}
     </header>
   );
 };

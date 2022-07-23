@@ -9,9 +9,12 @@ function App() {
   const onLoginHandler = () => {
     setIsLogin(true);
   };
+  const onLogoutHandler = () => {
+    setIsLogin(false);
+  };
   return (
     <>
-      <MainHeader isLogin={isLogin} />
+      <MainHeader isLogin={isLogin} onClosePage={onLogoutHandler} />
       <main>{isLogin ? <Home /> : <Login onLogin={onLoginHandler} />}</main>
     </>
   );
