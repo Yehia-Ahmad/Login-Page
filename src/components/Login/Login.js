@@ -1,23 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./Login.module.css";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
 
 const Login = (props) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [enteredEmail, setEnteredEmail] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState();
+  const [enteredPassword, setEnteredPassword] = useState("");
+  const [passwordIsValid, setPasswordIsValid] = useState();
+
+  const emailChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);
+    setIsDisabled(
+      event.target.value.includes("@") && enteredPassword.trim().length > 6
+    );
+  };
+
+  const passwordChangeHandler = (event) => {
+    setEnteredPassword(event.target.value);
+    setIsDisabled(
+      event.target.value.trim().length > 6 && enteredEmail.includes("@")
+    );
+  };
+
+  const emailvalidationHandler = () => {
+    setEmailIsValid(enteredEmail.includes("@"));
+  };
+
+  const passwordvalidationHandler = () => {
+    setPasswordIsValid(enteredPassword.trim().length > 6);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    props.onLogin();
+  };
+
   return (
     <Card className={styles.login}>
-      <form>
-        <div className={styles.control}>
-          <label>E-Mail</label>
-          <input type="emil" id="emil" />
+      <form onSubmit={submitHandler}>
+        <div
+          className={`${styles.control} ${
+            emailIsValid === false ? styles.invalid : ""
+          }`}
+        >
+          <label htmlFor="email">E-Mail</label>
+          <input
+            type="email"
+            id="email"
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+            onBlur={emailvalidationHandler}
+          />
         </div>
-        <div className={styles.control}>
-          <label>Password</label>
-          <input type="password" id="password" />
+
+        <div
+          className={`${styles.control} ${
+            passwordIsValid === false ? styles.invalid : ""
+          }`}
+        >
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={enteredPassword}
+            onChange={passwordChangeHandler}
+            onBlur={passwordvalidationHandler}
+          />
         </div>
         <div className={styles.actions}>
-          <Button>Login</Button>
+          <Button type="submit" className={styles.btn} disabled={!isDisabled}>
+            Login
+          </Button>
         </div>
       </form>
     </Card>
