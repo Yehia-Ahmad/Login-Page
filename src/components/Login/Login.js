@@ -5,16 +5,23 @@ import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
 
 const Login = (props) => {
-  const [isDisabled, setIsDisabled] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState("");
+  const [emailIsValid, setEmailIsValid] = useState();
   const [passwordIsValid, setPasswordIsValid] = useState();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    setIsDisabled(
-      enteredEmail.includes("@") && enteredPassword.trim().length > 6
-    );
+    const handler = setTimeout(() => {
+      console.log("Check for validation");
+      setIsDisabled(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+      );
+    }, 600);
+    return () => {
+      console.log("Cleanup");
+      clearTimeout(handler);
+    };
   }, [enteredEmail, enteredPassword]);
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
