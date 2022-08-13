@@ -8,7 +8,7 @@ const reduceEmail = (state, action) => {
   if (action.type === "USER_INPUT") {
     return { val: action.val, isValid: action.val.includes("@") };
   }
-  if (action.type === "USER_BLUR") {
+  if (action.type === "INPUT_BLUR") {
     return { val: state.val, isValid: state.val.includes("@") };
   }
   return { val: "", isValid: false };
@@ -18,7 +18,7 @@ const reducePassword = (state, action) => {
   if (action.type === "USER_INPUT") {
     return { value: action.value, isValid: action.value.trim().length > 6 };
   }
-  if (action.type === "USER_BLUR") {
+  if (action.type === "INPUT_BLUR") {
     return { value: state.value, isValid: state.value.trim().length > 6 };
   }
   return { value: "", isValid: false };
@@ -43,32 +43,28 @@ const Login = (props) => {
   useEffect(() => {
     const handler = setTimeout(() => {
       console.log("Check for validation");
-      setIsDisabled(
-        emailState.val.includes("@") && passwordState.value.trim().length > 6
-      );
+      setIsDisabled(emailState.isValid && passwordState.isValid);
     }, 600);
     return () => {
       console.log("Cleanup");
       clearTimeout(handler);
     };
-  }, [emailState.val, passwordState.value]);
+  }, [emailState.isValid, passwordState.isValid]);
 
   const emailChangeHandler = (event) => {
     disPatchEmail({ type: "USER_INPUT", val: event.target.value });
   };
 
   const emailvalidationHandler = () => {
-    disPatchEmail({ type: "USER_BLUR" });
+    disPatchEmail({ type: "INPUT_BLUR" });
   };
 
   const passwordChangeHandler = (event) => {
-    // setEnteredPassword(event.target.value);
     disPatchPassword({ type: "USER_INPUT", value: event.target.value });
   };
 
   const passwordvalidationHandler = () => {
-    // setPasswordIsValid(enteredPassword.trim().length > 6);
-    disPatchEmail({ type: "USER_BLUR" });
+    disPatchPassword({ type: "INPUT_BLUR" });
   };
 
   const submitHandler = (event) => {
