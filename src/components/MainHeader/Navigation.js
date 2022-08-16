@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import AuthContext from "../../Store/auth-context";
 
 import styles from "./Navigation.module.css";
@@ -7,36 +7,33 @@ const Navigation = (props) => {
   const closePage = () => {
     props.onClosePageHandler();
   };
+
+  const ctx = useContext(AuthContext);
+
   return (
-    <AuthContext.Consumer>
-      {(ctx) => {
-        return (
-          <nav className={styles.nav}>
-            <ul>
-              {ctx.isLoggedIn && (
-                <li>
-                  <a href="/" onClick={closePage}>
-                    User
-                  </a>
-                </li>
-              )}
-              {ctx.isLoggedIn && (
-                <li>
-                  <a href="/" onClick={closePage}>
-                    Admin
-                  </a>
-                </li>
-              )}
-              {ctx.isLoggedIn && (
-                <li>
-                  <button onClick={closePage}>Logout</button>
-                </li>
-              )}
-            </ul>
-          </nav>
-        );
-      }}
-    </AuthContext.Consumer>
+    <nav className={styles.nav}>
+      <ul>
+        {ctx.isLoggedIn && (
+          <li>
+            <a href="/" onClick={closePage}>
+              User
+            </a>
+          </li>
+        )}
+        {ctx.isLoggedIn && (
+          <li>
+            <a href="/" onClick={closePage}>
+              Admin
+            </a>
+          </li>
+        )}
+        {ctx.isLoggedIn && (
+          <li>
+            <button onClick={closePage}>Logout</button>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 };
 
