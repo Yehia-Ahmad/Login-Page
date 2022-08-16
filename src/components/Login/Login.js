@@ -3,6 +3,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import styles from "./Login.module.css";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
+import InputLogin from "../UI/Input/InputLogin";
 
 const reduceEmail = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -75,35 +76,25 @@ const Login = (props) => {
   return (
     <Card className={styles.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${styles.control} ${
-            emailState.isValid === false ? styles.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={emailState.val}
-            onChange={emailChangeHandler}
-            onBlur={emailvalidationHandler}
-          />
-        </div>
+        <InputLogin
+          inputLoginValdation={emailState.isValid}
+          name="E-mail"
+          inputHtmlFor="email"
+          inputType="email"
+          inputValue={emailState.val}
+          onChange={emailChangeHandler}
+          onBlur={emailvalidationHandler}
+        />
 
-        <div
-          className={`${styles.control} ${
-            passwordState.isValid === false ? styles.invalid : ""
-          }`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={passwordState.value}
-            onChange={passwordChangeHandler}
-            onBlur={passwordvalidationHandler}
-          />
-        </div>
+        <InputLogin
+          inputLoginValdation={passwordState.isValid}
+          name="Password"
+          inputHtmlFor="password"
+          inputType="password"
+          inputValue={passwordState.value}
+          onChange={passwordChangeHandler}
+          onBlur={passwordvalidationHandler}
+        />
         <div className={styles.actions}>
           <Button type="submit" className={styles.btn} disabled={!isDisabled}>
             Login
