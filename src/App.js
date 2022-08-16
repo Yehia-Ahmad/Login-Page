@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import MainHeader from "./components/MainHeader/MainHeader";
+import AuthContext from "./Store/auth-context";
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLoggedIn, setIsLogin] = useState(false);
 
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem("isLoggingIn");
@@ -24,8 +25,12 @@ function App() {
 
   return (
     <>
-      <MainHeader isLogin={isLogin} onClosePage={onLogoutHandler} />
-      <main>{isLogin ? <Home /> : <Login onLogin={onLoginHandler} />}</main>
+      <AuthContext.Provider value={{ isLoggedIn: isLoggedIn }}>
+        <MainHeader onClosePage={onLogoutHandler} />
+        <main>
+          {isLoggedIn ? <Home /> : <Login onLogin={onLoginHandler} />}
+        </main>
+      </AuthContext.Provider>
     </>
   );
 }
