@@ -42,11 +42,11 @@ const Login = (props) => {
   });
   useEffect(() => {
     const handler = setTimeout(() => {
-      console.log("Check for validation");
+      // console.log("Check for validation");
       setIsDisabled(emailState.isValid && passwordState.isValid);
     }, 600);
     return () => {
-      console.log("Cleanup");
+      // console.log("Cleanup");
       clearTimeout(handler);
     };
   }, [emailState.isValid, passwordState.isValid]);

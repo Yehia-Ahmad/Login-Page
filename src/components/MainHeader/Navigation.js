@@ -5,7 +5,7 @@ import styles from "./Navigation.module.css";
 
 const Navigation = (props) => {
   const closePage = () => {
-    props.onClosePageHandler();
+    ctx.onLogOut();
   };
 
   const ctx = useContext(AuthContext);
